@@ -1,0 +1,49 @@
+a,img,button,input,textarea,span,div,html,body,ul,li,select,p{margin: 0; padding: 0; outline: none;-webkit-tap-highlight-color:rgba(255,255,255,0);-webkit-appearance: none; border: none;border: 0;-webkit-text-size-adjust:none}
+html,body{height: 100%;/*overflow: hidden*/}
+body{min-width: 320px;margin: 0 auto;background-repeat: no-repeat;background-position: center; -webkit-overflow-scrolling: touch;}
+ul,li,ol{list-style-type: none}
+a{text-decoration: none;font-style: normal;display: inline-block}
+#container{width:100%;height:100%;position: relative;overflow: hidden;margin-left: auto;margin-right: auto;display: none}
+#canvas{width: 100%;height: 100%;background-color: transparent;}
+#loadPage{width: 100%;height: 100%;position: absolute;top: 0px;display: block;text-align: left;background-color: rgba(0,0,0,0);z-index: 1;background-repeat: no-repeat;background-size: auto 100%;background-position: center}
+#loadw{width: 63%;height: 2.2%;/*padding: 3px 2px;*/background-size: 100% 100%;}
+#loadn{width: 0%;height: 100%;}
+#LoadNum{text-align: center;color: #fff;margin-top: 20px;font-size: 18px;}
+#writeInfo{width: 100%;height: 100%;position: absolute;display: none;top: 0;left: 0;z-index:1;background-color: rgba(0,0,0,0);background-repeat: no-repeat;background-size: auto 100%;background-position: center}
+.inputClass{font-size: 16px;position: absolute;outline: none;background: transparent;border: none;text-align: left;}
+#alertPage{z-index: 101;position: absolute;width: 100%;height: 100%;top: 0;}
+.alert_content{top: 35%;width: 66%;height:30%;left: 17%;background-color: #ffffff;border-radius: 10px;position: absolute}
+#alertInfo{width: 80%;height: 50%;margin: auto;margin-top:15%;font-size: 0.5rem;color: #888888;word-break: break-all;text-align: center}
+.aler_button{bottom:0px;width: 100%;height: 25%;border-top: 1px solid #666666;display: table;position: absolute}
+.gobutton{width: 30%;height: 100%;text-align: center;font-size: 0.4rem;color: #006ca3;display: table-cell;vertical-align: middle;}
+.loadEffect{width: 50px;height: 50px;position: absolute;margin: -25px 0 0 -25px;top: 50%;left: 50%;}
+.loadEffect span{display: inline-block;width: 15px;height: 5px;border-top-left-radius: 2.5px;border-bottom-left-radius: 2.5px;background: #808080;position: absolute;-webkit-animation: load 1.04s ease infinite;}
+@-webkit-keyframes load{0%{opacity: 1;}100%{opacity: 0.2;}}
+.loadEffect span:nth-child(1){left: 0;top: 50%;margin-top:-2.5px;-webkit-animation-delay:0.13s;}
+.loadEffect span:nth-child(2){left: 5px;top: 10px;-webkit-transform: rotate(45deg);-webkit-animation-delay:0.26s;}
+.loadEffect span:nth-child(3){left: 50%;top: 5px;margin-left: -7.5px;-webkit-transform: rotate(90deg); -webkit-animation-delay:0.39s;}
+.loadEffect span:nth-child(4){top: 10px;right:5px;-webkit-transform: rotate(135deg); -webkit-animation-delay:0.52s;}
+.loadEffect span:nth-child(5){right: 0;top: 50%; margin-top:-2.5px; -webkit-transform: rotate(180deg); -webkit-animation-delay:0.65s;}
+.loadEffect span:nth-child(6){right: 5px;bottom:10px;-webkit-transform: rotate(225deg);-webkit-animation-delay:0.78s;}
+.loadEffect span:nth-child(7){bottom: 5px;left: 50%;margin-left: -7.5px;-webkit-transform: rotate(270deg); -webkit-animation-delay:0.91s;}
+.loadEffect span:nth-child(8){bottom: 10px;left: 5px; -webkit-transform: rotate(315deg);-webkit-animation-delay:1.04s;}
+#loadingPage{width: 100%;height: 100%;position: absolute;top: 0;left: 0;z-index: 999;display: none;}
+.containerclass1{-webkit-transform-origin:0% 0%;transform-origin:0% 0%;-webkit-transform: rotate(0deg);transform: rotate(0deg);}
+.containerclass2{-webkit-transform-origin:0% 0%;transform-origin:0% 0%;-webkit-transform: rotate(90deg);transform: rotate(90deg);}
+
+.list ul{
+    animation: 1s linear;
+    -webkit-animation: 1s linear;
+}
+
+.ellipsis{
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.forbidBodyScroll{
+    overflow-y: hidden !important;
+    height: 100% !important;
+    position: fixed;
+}

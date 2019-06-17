@@ -1,0 +1,92 @@
+@import url("../img/dzp/heijin/div.scss");
+@import url("../img/dzp/hongjin/div.scss");
+@import url("../img/dzp/nihong/div.scss");
+@import url("../img/dzp/custom/div.scss");
+#dzp {
+  .chosed {
+    img.item_on{
+      display: block !important;
+    }
+  }
+  .win_cash_info span{
+    width: 50%;
+    position: relative;
+    top: 4px;
+  }
+  &.custom .chosed {
+    img.item_on{
+      display: none !important;
+    }
+  }
+  .game_layer_share {
+    padding-right: 20px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: none;
+    z-index: 400;
+    height: 100%;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.85);
+    img {
+      width: 100%;
+    }
+  }
+  // cover
+  .alert {
+    display: block;
+  }
+  .win_cash_detail {
+    line-height: 1.4;
+  }
+  .win_cash_info {
+    span{
+      text-align: left;
+      text-indent: 5px;
+    }
+    .quan {
+      left: 80%;
+      width: 17%;
+      font-size: .8rem;
+    }
+  }
+  // 中奖滚动榜单
+  #maqBox{
+    overflow: hidden;
+  }
+  #con1 li{
+    height:30px;
+  }
+  #con1.anim{
+    -webkit-transition: all 0.5s;
+    transition: all 0.5s;
+    margin-top: -30px;
+  }
+  // 未中奖提示
+  .score_no {}
+
+  .score_no div {
+    width: 100%;
+    height: 100%;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+  }
+
+  .score_no span {
+    font-size: .34rem;
+    color: #fff;
+    padding: .1rem .5rem;
+    background: #000;
+    position: absolute;
+    line-height: .34rem;
+    height: .34rem;
+    border-radius: .1rem;
+  }
+}

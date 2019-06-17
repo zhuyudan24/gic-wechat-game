@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+  <meta charset="UTF-8">
+  <meta name='viewport' content='width=device-width,initial-scale=1.0,user-scalable=no'>
+  <title></title>
+  <link rel="stylesheet" href="css/index.css">
+</head>
+<body onload='init();' id="body">
+<div id="container">
+  <!--背景音乐控制-->
+  <div id="audioButn">
+    <img class="tada" src="img/sound.png?1.3" width="100%" id="btnimg" />
+  </div>
+  <!--加载页-->
+  <div id="loadPage" class="page">
+    <div class="load_content">
+      <img src="img/loading_pic.png" />
+      <p>游戏正在加载中•••</p>
+    </div>
+  </div>
+  <div id="home" class="page">
+    <img id="logo" src="" alt="" class="btn_logo"/>
+    <input type="button" class="btn to_start">
+    <input type="button" class="btn to_rule paopaoAnimate">
+    <input type="button" class="btn to_rank">
+    <input type="button" class="btn to_prize">
+  </div>
+
+  <!--游戏页-->
+  <canvas id="canvas" width="760" height="960"></canvas>
+  <!--排行榜-->
+  <div id="rank" class="page">
+    <div class="rank_list btn">
+      <ul></ul>
+    </div>
+    <input type="button" class="to_game btn">
+    <input type="button" class="close_rank btn">
+  </div>
+  <!--游戏成功-->
+  <div id="s_game" class="page" style="display: none;">
+    <input type="button" class="btn g_close">
+    <div class="btn_all_rank">
+      <span class="g_rank_title">恭喜您全国排名第</span>
+      <input type="button" class="btn g_ranknum" value="">
+      <span class="g_rank_title">名</span>
+    </div>
+
+    <input type="button" class="btn s_score" value="0">
+    <input type="button" class="btn get_tik">
+  </div>
+  <!--游戏成功 未开卡-->
+  <div id="couponNoMember" class="page">
+    <div class="coupon_alert">
+      <p class="coupon_name">消费现金券</p>
+    </div>
+    <p class="card_tip">
+      你还不是会员,</br>请先开卡后领取
+    </p>
+    <input type="button" class="btn create_card" />
+    <input type="button" class="btn give_up_coupon" />
+  </div>
+  <!--游戏失败-->
+  <div id="f_game" class="page">
+    <input type="button" class="btn g_close">
+    <input type="button" class="btn r_score" value="0">
+    <input type="button" class="btn g_score" value="0">
+    <input type="button" class="btn get_rule">
+    <input type="button" class="btn play_ag">
+  </div>
+  <!--核销-->
+  <div id="use_prize" class="page">
+    <input type="button" class="close_use btn">
+    <p class="pri_name btn"></p>
+    <div class="code_im btn">
+      <canvas id="canvasTarget" width="380" height="100" style="width: 100%;height: 100%"></canvas>
+    </div>
+    <div class="btn prize_rule"></div>
+    <input type="button" class="to_home btn">
+    <input type="button" class="btn jdv_shop">
+  </div>
+  <!--游戏未开始提示-->
+  <div id="gameNotStart" class="page">
+    <p class="game_notstart_tip">
+      游戏将在<span class="game_start_time" id="beginTime"></span>开始<br />请耐心等待哦！
+    </p>
+    <input type="button" class="btn game_notstart_cancel">
+  </div>
+  <!--游戏已结束提示-->
+  <div id="gameAlreadytEnd" class="page">
+    <input type="button" class="btn game_notstart_cancel">
+    <p class="game_notstart_tip">哎呀，游戏已经结束了</p>
+  </div>
+  <!--我的奖券 已开卡-->
+  <div id="couponAlreadyMember" class="page">
+    <input type="button" class="btn start_game" />
+    <input type="button" class="btn back_index" />
+    <div class="coupon_list"></div>
+  </div>
+  <!--分享加次数页-->
+<!--  <div id="share_add" class="page"></div>-->
+  <!--规则页-->
+  <div id="rule" class="page">
+    <input type="button" class="btn r_close">
+    <div class="rule_container">
+      <p class="rule_container_title">游戏说明:</p>
+      <p class="rule_container_content" id="gameIntroduction"></p>
+    </div>
+  </div>
+  <!--弹出对话框-->
+  <div id="alert">
+    <div id="alertinfo">
+      <div id="contentpage"></div>
+      <div id="buttonpage">
+        <div id="sureBtn" onclick="closeAlert()">确定</div>
+      </div>
+    </div>
+  </div>
+  <!-- 没有达到参与门槛的弹窗 -->
+  <div id="partakeSill" class="partake-sill">
+    <div class="partake-sill__cont">
+      <h3 class="partake-sill__title">你还未满足参与游戏条件！</h3>
+      <img id="partakeSillImg" class="partake-sill__img" src="" alt="">
+      <p id="partakeSillMsg" class="partake-sill__msg"></p>
+    </div>
+  </div>
+</div>
+
+<!-- 背景音乐 -->
+<audio id="bgm" src="" autoplay="autoplay" loop="loop"></audio>
+<audio id="tip" src="" loop="loop"></audio>
+</body>
+<script src="js/jquery-1.9.1.min.js"></script>
+<script src="js/LC_LoaderBar_class.min.js"></script>
+<script src="js/Tool.js"></script>
+<script src="js/Data.js"></script>
+<script src="js/main.js?1.9"></script>
+<script src="js/jquery-barcode.js"></script>
+<script type="text/javascript">
+  var load = new loading("container");
+  var scaling = brHeight / 960;
+  var imgData;
+  var jsArr = [
+    "js/jweixin-1.0.0.js",
+    "js/gameE_min.js",
+    "js/lib.js?1.6",
+    "js/PanelContraller.js",
+    "js/Game.js?2.2",
+    "js/share.js"
+  ];
+  var images, canvas, stage, loadBar;
+  var shareData = {};
+  var shareFlag = 0;
+  var audioType = true, bgm;
+  getE("audioButn")
+    .addEventListener(
+      "click",
+      function() {
+        if (!bgm) {
+          bgm = getE("bgm");
+        }
+        if (audioType) {
+          bgm.pause();
+          audioType = false;
+          getE("audioButn").innerHTML = '<img src="img/sound_close.png?1.3" width="100%"/>';
+        } else {
+          bgm.play();
+          audioType = true;
+          getE("audioButn").innerHTML = '<img class="tada" src="img/sound.png?1.3" width="100%"/>';
+        }
+      });
+
+  function getE(id) {
+    return document.getElementById(id);
+  }
+  function init() {
+    images = images || {};
+    canvas = document.getElementById("canvas");
+    var activityId = getQueryString('activityId');
+    var memberId = getQueryString('memberId');
+    getWxInfo(activityId, memberId, function(data) {
+      var arr = data.result.beginTime.split(/[- : \/]/);
+      gameData.beginTime =  new Date(arr[0], arr[1]-1, arr[2], arr[3], arr[4], arr[5]);
+      arr = data.result.endTime.split(/[- : \/]/);
+      gameData.endTime =  new Date(arr[0], arr[1]-1, arr[2], arr[3], arr[4], arr[5]);
+      gameData.gameId = data.result.gameActivityDTO.gameActivityId;
+      gameData.uId = data.result.memberId;
+      gameData.cardNo = data.result.cardNo;
+      gameData.nick = data.result.nickName;
+      gameData.isAuth = data.result.isAuth;
+      gameData.game = data.result.gameTimesRemaining;
+      gameData.shareURL = data.result.host;
+      gameData.prizeLink = data.result.host + "/game-prizelist-np?gameId=" + data.result.gameActivityDTO.gameActivityId;
+      var shareSetting = data.result.gameActivityDTO.shareSetting;
+      var attendCondition = data.result.attendCondition;
+      if (!attendCondition) {
+        attendCondition = {};
+      }
+      if (!shareSetting) {
+        shareSetting = {};
+      }
+      //分享数据
+      shareData = {
+        link : data.result.gameActivityDTO.shareLink,
+        desc : shareSetting.shareTextInfo,
+        imgUrl : shareSetting.shareImgUrl,
+        title : shareSetting.shareTitle
+      };
+      shareFlag = data.result.gameActivityDTO.shareFlag;
+      if (shareData.imgUrl && shareData.imgUrl.indexOf('http') !== 0 ) {
+        shareData.imgUrl = window.location.href.replace(/pages\/znm\/znm\.html.*$/, 'static/img/share/znm.png');
+      }
+      setTitle(data.result.title);
+      $('#logo').attr('src', data.result.gameActivityDTO.logoImgUrl);
+      $('#beginTime').text(data.result.beginTimeStr);
+      $('#gameIntroduction').text(data.result.gameActivityDTO.gameIntroduction);
+      $('#partakeSillImg').attr('src', attendCondition.tipImageUrl && attendCondition.tipImageUrl.indexOf('http') === 0 ? data.result.attendCondition.tipImageUrl : '../../static/img/attend/znm.png');
+      $('#partakeSillMsg').text(attendCondition.tipTitle);
+      /*这里写loadBar*/
+      loadBar = new LC_LoaderBar(function(msg) {
+        // 这里必须要传一个空函数，我也不知道为什么我也不敢问呀
+      });
+      loadBar.loadJsArr(jsArr, gameReady, true);
+      checkPermission(activityId, memberId, function (data) {
+        if (data.result.res === 'ok') {
+          // 可以玩
+          gameData.canPlay = true;
+        } else {
+          // 不可以玩
+          gameData.canPlay = false;
+          $('#partakeSill').css('display', 'flex');
+        }
+      })
+    })
+  }
+  //获取参数
+  function getQueryString(name){
+    var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+    var r = window.location.search.substr(1).match(reg);
+    if(r!=null)return  unescape(r[2]); return null;
+  }
+  function setTitle(title) {
+    document.title = title;
+    var userAgent = window.navigator.userAgent.toLowerCase();
+    var isiOS = userAgent.indexOf('applewebkit') >= 0;
+    var isWechat = userAgent.indexOf('micromessenger') >= 0;
+    if (isiOS && isWechat) {
+      var iframe = document.createElement('iframe');
+      // iframe.src = 'https://www.baidu.com/favicon.ico';
+      iframe.style.display = 'none';
+      document.body.appendChild(iframe);
+      iframe.onload = function () {
+        setTimeout(function () {
+          iframe.remove();
+        }, 0)
+      }
+    }
+  }
+
+  /*加载完后的方法*/
+  function gameReady() {
+    getE("loadPage").style.display = "none";
+    $("#bgm").attr('src', 'img/bgm.mp3?1.3');
+    $("#tip").attr('src', 'img/tip.mp3');
+    $("#home").show();
+    stage = new createjs.Stage(canvas);
+    window.initGame();
+  }
+</script>
+<script type="text/javascript">
+  var _hmt = _hmt || [];
+  (function() {
+    var hm = document.createElement("script");
+    hm.src = "//hm.baidu.com/hm.js?47362f54f594efad07774d01ad0858d5";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+  })();
+  window.onresize = function() {
+  }
+</script>
+</html>

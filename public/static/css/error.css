@@ -1,0 +1,52 @@
+body,
+html {
+  height: 100%;
+  width: 100%;
+  background: #FFFFFF;
+}
+
+.error-page {
+  position: relative;
+  height: 100%;
+  width: 100%;
+  font-size: 0;
+}
+
+.error-image {
+  font-size: 0;
+  text-align: center;
+}
+
+.error-image-img {
+  display: inline-block;
+}
+
+.error-image-img img {
+  width: 110px;
+  height: 110px;
+}
+
+.error-page-content {
+  position: absolute;
+  top: 30%;
+  left: 50%;
+  margin-top: -55px;
+  margin-left: -108px;
+}
+
+.error-text {
+  vertical-align: middle;
+  position: relative;
+  margin-top: 10px;
+}
+
+.error-text-top {
+  font-size: 18px;
+  color: #333;
+}
+
+.error-text-bottom {
+  font-size: 14px;
+  margin-top: 10px;
+  color: #666;
+}

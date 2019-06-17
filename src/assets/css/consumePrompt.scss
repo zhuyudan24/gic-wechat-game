@@ -1,0 +1,234 @@
+.consumePrompt {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.8);
+  z-index: 99;
+
+  div.content {
+    /*height: 80%;*/
+    margin: 2.5rem auto;
+    position: relative;
+
+    p.title {
+      font-weight: 500;
+      display: block;
+      width: 100%;
+      text-align: center;
+      position: absolute;
+      top: 1.54rem;
+      margin: 0 auto;
+      font-size: 0.6rem;
+      color: #fff;
+    }
+  }
+
+  .ct {
+    position: relative;
+    top: 4.45rem;
+  }
+
+  .warnText {
+    text-align: center;
+    font-size: .42rem;
+    // position: absolute;
+    line-height: .42rem;
+    height: .42rem;
+    border-radius: .1rem;
+  }
+
+  .check-mask {
+    display: inline-block;
+    width: 0.4rem;
+    height: 0.4rem;
+    position: relative;
+    top: 2px;
+  }
+
+  .prompt-checkbox {
+    // position: relative;
+    text-align: center;
+    margin-top: 0.7rem;
+    margin-bottom: 1.5rem;
+    font-size: 0.35rem;
+
+    input {
+      position: relative;
+      z-index: 100;
+      display: inline-block;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+    }
+  }
+
+  .prompt-btn {
+    margin: 0 0;
+    padding: 0 1.9rem;
+    overflow: hidden;
+    // display: flex;
+    // width: 100%;
+    button {
+      height: 1rem;
+      text-align: center;
+      width: 2.42rem;
+      font-size: 0.4rem;
+    }
+
+    button.left {
+      float: left;
+    }
+
+    button.right {
+      float: right;
+    }
+  }
+}
+
+.heijin {
+  $color: rgba(254, 218, 166, 1);
+  color: $color;
+  p.title { top: 1.9rem !important; }
+  .content {
+    width: 7.8rem;
+    height: 9.8rem;
+    background: url("../img/common/heijin/bg.png")no-repeat center /100% 100%;
+  }
+
+  .check-mask {
+    background: url("../img/common/heijin/select.png")no-repeat center /100% 100%;
+
+    &.checked {
+      background: url("../img/common/heijin/selected.png")no-repeat center /100% 100%;
+    }
+  }
+
+  .prompt-btn {
+    padding: 0 1.25rem;
+    button {
+      color: $color;
+
+      &.left {
+        background: url("../img/common/heijin/btn-left.png")no-repeat center /100% 100%;
+      }
+
+      &.right {
+        background: url("../img/common/heijin/btn-right.png")no-repeat center /100% 100%;
+      }
+    }
+  }
+}
+
+.hongjin {
+  $color: rgba(113, 64, 42, 1);
+  color: $color;
+
+  .content {
+    width: 9rem;
+    height: 9.36rem;
+    background: url("../img/common/hongjin/bg.png")no-repeat center /100% 100%;
+  }
+
+  .check-mask {
+    background: url("../img/common/hongjin/select.png")no-repeat center /100% 100%;
+
+    &.checked {
+      background: url("../img/common/hongjin/selected.png")no-repeat center /100% 100%;
+    }
+  }
+
+  .prompt-btn {
+    button {
+      color: $color;
+
+      &.left {
+        background: url("../img/common/hongjin/btn-left.png")no-repeat center /100% 100%;
+      }
+
+      &.right {
+        color: white;
+        background: url("../img/common/hongjin/btn-right.png")no-repeat center /100% 100%;
+      }
+    }
+  }
+}
+
+.nihong {
+  $color: rgba(255, 226, 188, 1);
+  color: $color;
+
+  .content {
+    width: 9rem;
+    height: 9.36rem;
+    background: url("../img/common/nihong/bg.png")no-repeat center /100% 100%;
+  }
+
+  .check-mask {
+    background: url("../img/common/nihong/select.png")no-repeat center /100% 100%;
+
+    &.checked {
+      background: url("../img/common/nihong/selected.png")no-repeat center /100% 100%;
+    }
+  }
+
+  .prompt-btn {
+    button {
+      color: $color;
+
+      &.left {
+        background: url("../img/common/nihong/btn-left.png")no-repeat center /100% 100%;
+      }
+
+      &.right {
+        background: url("../img/common/nihong/btn-right.png")no-repeat center /100% 100%;
+      }
+    }
+  }
+}
+
+.custom{
+  $color:#D8043D;
+  &.consumePrompt div.content {
+    background: white;
+    width: 80%;
+    border-radius: 5px;
+    margin-left:10%;
+    p.title{
+      position: static;
+      color: #303133;
+      padding: 0.5rem 0;
+    }
+    .prompt-btn{
+      padding: 1rem 1.2rem;
+    }
+    .prompt-checkbox input{
+      border:1px solid $color;
+    }
+  }
+  .check-mask {
+    position: relative;
+    border: 1px solid $color;
+    border-radius: 2px;
+    &.checked {
+      background: url("../img/common/checked.png")no-repeat center /100% 100% $color;
+    }
+    
+  }
+  button{
+    border-radius: 3px;
+    &.left {
+      background: white;
+      color: $color;
+      border:1px solid $color;
+    }
+    &.right{
+      color: white;
+      background-color: $color;
+    }
+  }
+  .ct{
+    position: static;
+  }
+}

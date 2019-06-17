@@ -1,0 +1,372 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no" id="viewport">
+		<meta name="format-detection" content="telephone=no" />
+		<title>游戏分享</title>
+        <script src="./js/qrcode.js" type="text/javascript" charset="utf-8"></script>
+        <script type="text/javascript" src="https://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>        
+		<link rel="stylesheet" href="./css/MobileReset.css">
+		<link rel="stylesheet" href="./css/iconfont.css">
+		<link rel="stylesheet" type="text/css" href="./css/weui2.0.css" />
+		<link rel="stylesheet" href="./css/base.css">
+		<link rel="stylesheet" href="./css/swiper.min.css">
+		<link rel="stylesheet" type="text/css" href="./css/christmas-jigsaw.css" />
+		<style type="text/css">
+			.icon {
+				width: 24px;
+				height: 24px;
+				vertical-align: -0.2em;
+				fill: currentColor;
+				overflow: hidden;
+			}
+			
+			.big-icon {
+				width: 32px;
+				height: 32px;
+				vertical-align: -0.3em;
+				fill: currentColor;
+				overflow: hidden;
+			}
+		</style>
+        <script type="text/javascript">
+            var remPx = 0;
+			(function(doc, win) {
+				var docEl = doc.documentElement,
+					resizeEvt = 'orientationchange' in window ? 'orientationchange' : 'resize',
+					recalc = function() {
+						var clientWidth = docEl.clientWidth;
+						if(clientWidth > 640) {
+							clientWidth = 640;
+						}
+                        docEl.style.fontSize = (clientWidth / 10) + 'px';
+                        remPx = clientWidth / 10;
+					};
+
+				if(!doc.addEventListener) return;
+				win.addEventListener(resizeEvt, recalc, false);
+				doc.addEventListener('DOMContentLoaded', recalc, false);
+			})(document, window);
+		</script>
+	</head>
+
+	<body class="christmas_share_body share-bg">
+		<div class="christmas_share_wrap">
+			<div class="head">
+				<div class="company_logo share_company_logo"> <img id="logoImgUrl"  /> </div>
+			</div>
+			<div class="christmas_share_main share-banner">
+				<div class="christmas_share_bd">
+                    <div class="share-game-txt-top">
+                        <p>您的朋友 <span id="memberName" class="red"></span> 邀请您一起</p>
+                        <p>参加<span id="gameName"></span></p>
+                    </div>
+                    <div class="share-game-txt-bottom">
+                        <p>点击下方按钮给Ta<span class="red"> 赠送体力 </span></p>
+                        <p>助Ta拿大奖</p>
+                    </div>
+				</div>
+			</div>	
+			<div class="christmas_share_btn_area">
+				<a href="javascript:void(0)" class="christmas_share_btn share-giveBtn"></a>
+			</div>
+		</div>
+		<div class="weui_dialog_alert weui_dialog_alert_success" style="display:none;z-index: 320;">
+			<div class="share_weui_task weui_mask"></div>
+			<div class="christmas_share_dialog share-box">
+				<div class="share_dialog_close_btn">
+					<i class="font_family icon-guanbi"></i>
+				</div>
+				<div class="christmas_share_dialog_bd">
+					<h5>成功赠送体力！</h5>
+					<div class="christmas_share_code">
+						<div class="wechat" id="qrcode" style="display: none"></div>
+						<div class="wechat" id="qrcode2">
+							<img src="" alt="">
+						</div>
+						<!--						<i class="icon-zhiwen01"></i>-->
+					</div>
+
+					<div class="christmas_share_dialog_txt">
+						<p>长按二维码参与游戏</p>
+					</div>
+
+					<div class="share_dialog_prize_name">
+						<span>就有机会获得<span id="prizeName"></span></span>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!--成功赠送体力-->
+		<div class="weui_dialog_alert  weui_dialog_alert_faile" style="display:none;z-index: 330;">
+			<div class="share_weui_task weui_mask"></div>
+			<div class="christmas_share_dialog">
+				<div class="christmas_share_dialog_hd">
+				</div>
+				<div class="christmas_share_over_bd">
+					<p>该活动已结束啦！</p>
+					<p>下次记得早点来哦～</p>
+				</div>
+				<div class="christmas_share_over_ft">
+					<div class="game_dialog_btn">
+						<a href="#" class="christmas_share_btn_default">OK</a>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!--游戏结束-->
+<script src="./js/jquery-3.0.0.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="./js/utils.js" type="text/javascript" charset="utf-8"></script>
+<script src="./js/share-imgs.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript">
+var activityId = getQueryString("activityId");
+var shareId = getQueryString("shareId");
+var appkey = getQueryString("appkey");
+var enterpriseId = getQueryString("enterpriseId");
+var guestId = getQueryString("guestId");
+$(function () {
+	var infoParams = {
+		activityId: activityId,
+		shareId: shareId,
+		appkey: appkey,
+		enterpriseId: enterpriseId
+	};
+	service('POST', 'puzzle-game-share', infoParams, 'json').then(function (res) {
+		if (res.errorCode === 0) {
+			var gameInfo = res.result.gameActivityDTO;
+			initWx(gameInfo);
+			initPage(gameInfo, res.result);
+			setTitle(gameInfo.gameName);
+		} else {
+			alert('获取失败');
+			return;
+		}
+	});
+
+	function initPage(info, result) {
+		let skinType = info.skinType + 1;
+		$('.christmas_share_body').addClass('skin' + (skinType));
+		document.title = (info.gameName || '') + '-游戏分享';
+		$('#memberName').text(result.memberName || '--');
+		$('#gameName').text(`“${info.gameName}”赢大奖`);
+		$('#prizeImgUrl').attr('src', result.gameActivityPrizeDTO.prizeImgUrl + '?imageView2/0/w/150/h/150');
+		$('#prizeName').text(result.gameActivityPrizeDTO.prizeName);
+		$('#logoImgUrl').attr('src', info.logoImgUrl);
+
+
+		$('.share-bg').css({'background-image': info.shareGame.backgroundImgUrl ? `url(${info.shareGame.backgroundImgUrl})` : `url(./images/${skinType}/share-bg.png)`});
+		$('.share-banner').css({'background-image': info.shareGame.bannerImgUrl ? `url(${info.shareGame.bannerImgUrl})` : `url(./images/${skinType}/share-banner.png)`});
+		$('.share-giveBtn').css({'background-image': info.shareGame.shareButtonImgUrl ? `url(${info.shareGame.shareButtonImgUrl})` : `url(./images/${skinType}/share-giveBtn.png)`});
+		$('.share-box').css({'background-image': `url(./images/${skinType}/share-box.png)`});
+
+		// 生成二维码
+		var qrcode = new QRCode('qrcode', {
+			text: info.qrcodeUrl,
+			width: $('#qrcode').width(),
+			height: $('#qrcode').height()
+		});
+		// 解决部分手机不能长按识别二维码的问题
+		var img = new Image();
+		img.src = $('#qrcode').children(':first')[0].toDataURL('image/png');
+		$('#qrcode2').html(img)
+	};
+
+	//游戏分享页面赠送成功的弹出层
+	$('.christmas_share_btn').on('touchstart', function () {
+		var data = {
+			shareId: shareId,
+			guestId: guestId,
+			enterpriseId: enterpriseId
+		};
+		$.ajax({
+			type: 'POST',
+			url: baseUrl + 'puzzle-game-add-accountval',
+			data: data,
+			dataType: 'json',
+			success: function (msg) {
+				if (msg.res == 'ok') {
+					if ($('#activityStatus').val() == 2) {
+						$('.weui_dialog_alert_faile').css('display', 'block');
+					} else {
+						$('.weui_dialog_alert_success').css('display', 'block');
+					}
+				}
+			}
+		});
+	});
+
+	//游戏分享页面赠送成功关闭
+	$('.share_dialog_close_btn').on('touchstart', function () {
+		$('.weui_dialog_alert_success').css('display', 'none');
+	});
+
+	//游戏分享页面赠送失败的弹出层 关闭
+	$('.christmas_share_btn_default').on('touchstart', function () {
+		$('.weui_dialog_alert_faile').css('display', 'none');
+	});
+});
+
+
+var initWx = function (info) {
+	if (!info.shareSetting) info.shareSetting = {};
+	var shareData = {
+		title: info.shareSetting.shareTitle || '您的好友邀请你一起来玩拼图游戏~',
+		link: info.shareLink,
+		imgUrl: info.shareSetting.shareImgUrl,
+		desc: info.shareSetting.shareTextInfo || '玩游戏，赠送体力，pk好友，赢大奖！'
+	};
+	if (shareData.imgUrl && shareData.imgUrl.indexOf('http') !== 0) {
+		shareData.imgUrl = window.location.href.replace(/pages\/ptyx\/ptyx\.html.*$/, 'static/img/share/ptyx.png');
+	}
+	var wx_share = {
+		init: function() {
+			var self = this;
+			$.ajax({
+				url: window.location.origin + '/gicfwh/puzzle-weixin-jsapi',
+				data: {
+					url: window.location.href,
+					memberId: getQueryString('memberId')
+				},
+				type: 'post',
+				dataType: 'json',
+				success: function (res) {
+					var configMap = JSON.parse(JSON.parse(res.result));
+					var config = {};
+					config.debug = false;
+					config.appId = configMap.appId;
+					config.timestamp = configMap.timestamp;
+					config.nonceStr = configMap.nonceStr;
+					config.signature = configMap.signature;
+					if (info.shareFlag) {
+						config.jsApiList = ['checkJsApi', 'onMenuShareTimeline', 'onMenuShareAppMessage', 'onMenuShareQQ', 'onMenuShareWeibo', 'onMenuShareQZone', 'addCard', 'openCard'];
+						wx.config(config);
+						wx.ready(self.check);
+					} else {
+						config.jsApiList = ['hideAllNonBaseMenuItem'];
+						wx.config(config);
+						wx.ready(wx.hideAllNonBaseMenuItem);
+					}
+				}
+			})
+		},
+		check: function() {
+			wx.checkJsApi({
+				jsApiList: [
+					'checkJsApi',
+					'onMenuShareTimeline',
+					'onMenuShareAppMessage',
+					'onMenuShareQQ',
+					'onMenuShareWeibo',
+					'onMenuShareQZone'
+				]
+			});
+			wx.onMenuShareTimeline({
+				title: shareData.title,
+				// 分享标题
+				link: shareData.link,
+				// 分享链接
+				imgUrl: shareData.imgUrl,
+				// 分享图标
+				success: function() {
+					// 用户确认分享后执行的回调函数
+					$('.game_layer_share').hide();
+				},
+				cancel: function() {
+					// 用户取消分享后执行的回调函数
+				}
+			});
+			wx.onMenuShareAppMessage({
+				title: shareData.title,
+				// 分享标题
+				desc: shareData.desc,
+				// 分享描述
+				link: shareData.link,
+				// 分享链接
+				imgUrl: shareData.imgUrl,
+				// 分享图标
+				success: function() {
+					// 用户确认分享后执行的回调函数
+					$('.game_layer_share').hide();
+				},
+				cancel: function() {
+					// 用户取消分享后执行的回调函数
+				}
+			});
+			wx.onMenuShareQQ({
+				title: shareData.title,
+				// 分享标题
+				desc: shareData.desc,
+				// 分享描述
+				link: shareData.link,
+				// 分享链接
+				imgUrl: shareData.imgUrl,
+				// 分享图标
+				success: function() {
+					// 用户确认分享后执行的回调函数
+					$('.game_layer_share').hide();
+				},
+				cancel: function() {
+					// 用户取消分享后执行的回调函数
+				}
+			});
+			wx.onMenuShareWeibo({
+				title: shareData.title,
+				// 分享标题
+				desc: shareData.desc,
+				// 分享描述
+				link: shareData.link,
+				// 分享链接
+				imgUrl: shareData.imgUrl,
+				// 分享图标
+				success: function() {
+					// 用户确认分享后执行的回调函数
+					$('.game_layer_share').hide();
+				},
+				cancel: function() {
+					// 用户取消分享后执行的回调函数
+				}
+			});
+			wx.onMenuShareQZone({
+				title: shareData.title,
+				// 分享标题
+				desc: shareData.desc,
+				// 分享描述
+				link: shareData.link,
+				// 分享链接
+				imgUrl: shareData.imgUrl,
+				// 分享图标
+				success: function() {
+					// 用户确认分享后执行的回调函数
+					$('.game_layer_share').hide();
+				},
+				cancel: function() {
+					// 用户取消分享后执行的回调函数
+				}
+			});
+		}
+	}
+	wx_share.init();
+};
+function setTitle(title) {
+	document.title = title;
+	var userAgent = window.navigator.userAgent.toLowerCase();
+	var isiOS = userAgent.indexOf('applewebkit') >= 0;
+	var isWechat = userAgent.indexOf('micromessenger') >= 0;
+	if (isiOS && isWechat) {
+		var iframe = document.createElement('iframe');
+		// iframe.src = 'https://www.baidu.com/favicon.ico';
+		iframe.style.display = 'none';
+		document.body.appendChild(iframe);
+		iframe.onload = function () {
+			setTimeout(function () {
+				iframe.remove();
+			}, 0)
+		}
+	}
+}
+
+</script>
+</body>
+</html>

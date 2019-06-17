@@ -1,0 +1,52 @@
+@import url("../img/ggk/heijin/div.scss");
+@import url("../img/ggk/hongjin/div.scss");
+@import url("../img/ggk/nihong/div.scss");
+@import url("../img/ggk/custom/div.scss");
+
+#ggk {
+  .win_cash_info span{
+    width: 50%;
+    position: relative;
+    top: 4px;
+    // line-height: 0.96rem;
+  }
+  .win_cash .quan{
+    left: 80%;
+    width: 17%;
+    font-size: .8rem;
+  }
+  .game_layer_share {
+    padding-right: 20px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: none;
+    z-index: 400;
+    height: 100%;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.85);
+    img {
+      width: 100%;
+    }
+  }
+  // cover
+  .alert {
+    display: block;
+  }
+  // 中奖滚动榜单
+  #maqBox{
+    overflow: hidden;
+  }
+  #con1 li{
+    height:30px;
+  }
+  #con1.anim{
+    -webkit-transition: all 0.5s;
+    transition: all 0.5s;
+    margin-top: -30px;
+  }
+  .maskImg{
+    width: 100%;
+    height: 100%;
+  }
+}
